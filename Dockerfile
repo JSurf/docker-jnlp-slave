@@ -20,8 +20,9 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-FROM java:8-jdk
-MAINTAINER Nicolas De Loof <nicolas.deloof@gmail.com>
+FROM jsurf/rpi-java:latest
+
+RUN [ "cross-build-start" ]
 
 ENV HOME /home/jenkins
 RUN useradd -c "Jenkins user" -d $HOME -m jenkins
@@ -34,6 +35,9 @@ COPY jenkins-slave /usr/local/bin/jenkins-slave
 
 VOLUME /home/jenkins
 WORKDIR /home/jenkins
+
+RUN [ "cross-build-end" ]
+
 USER jenkins
 
 ENTRYPOINT ["jenkins-slave"]
